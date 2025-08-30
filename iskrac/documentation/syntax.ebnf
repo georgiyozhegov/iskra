@@ -1,11 +1,41 @@
-Program = { Declaration };
+Module = { Declaration };
 
-Declaration = Function;
+(* Declaration *)
 
-Function = "function", Identifier, "(", ")", { Statement }, "end";
+Declaration = Constant | Function;
 
-Statement = Let | While;
+Constant = "let", Identifier, "=", Expression;
+
+Function = "function", Identifier, "(", ")", FunctionBody;
+
+FunctionBody = "do", { Statement }, "end";
+
+(* Statement *)
+
+Statement = Let | Assign | While;
 
 Let = "let", [ "mutable" ], Identifier, "=", Expression;
 
-While = "while", Expression, "{", { Statement }, "}";
+Assign = Identifier, ( "=" | "-=" ), Expression;
+
+While = "while", Expression, Block;
+
+Block = "{", { Statement }, "}";
+
+(* Expression *)
+
+Expression = Identifier | Integer | Parenthesized | Binary;
+
+Identifier = Alphabetic, { Alphabetic | Numeric };
+
+Alphabetic = "_" | "a" | ... | "z" | "A" | ... | "Z";
+
+Integer = [ "-" ], Numeric, { Numeric };
+
+Numeric = "0" | ... | "9";
+
+Parenthesized = "(", Expression, ")";
+
+Binary = Expression, BinaryOperator, Expression;
+
+BinaryOperator = "+" | "-" | "*" | ">";
