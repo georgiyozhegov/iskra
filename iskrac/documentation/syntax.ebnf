@@ -1,0 +1,11 @@
+Program = { Declaration };
+
+Declaration = Function;
+
+Function = "function", Identifier, "(", ")", { Statement }, "end";
+
+Statement = Let | While;
+
+Let = "let", [ "mutable" ], Identifier, "=", Expression;
+
+While = "while", Expression, "{", { Statement }, "}";
