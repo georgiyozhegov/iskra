@@ -76,7 +76,7 @@ impl<'s> Lexer<'s> {
                     Token::Minus
                 }
             }
-            '+' => Token::Equal,
+            '+' => Token::Plus,
             '*' => Token::Asterisk,
             '>' => Token::Greater,
             '(' => Token::OpenRound,
