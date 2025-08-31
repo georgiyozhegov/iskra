@@ -7,4 +7,4 @@ edition = "2024"
 iskrac-lexer = { path = "iskrac-lexer" }
 
 [workspace]
-members = ["iskrac-lexer"]
+members = ["iskrac-interner", "iskrac-lexer"]
