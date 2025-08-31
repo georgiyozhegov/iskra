@@ -1,10 +1,10 @@
-Identifier("name")
+Identifier(Symbol(0))
 Invisible
-Identifier("NAME")
+Identifier(Symbol(1))
 Invisible
-Identifier("nAmE")
+Identifier(Symbol(2))
 Invisible
-Identifier("_na_me_")
+Identifier(Symbol(3))
 Invisible
-Identifier("name123")
+Identifier(Symbol(4))
 Invisible

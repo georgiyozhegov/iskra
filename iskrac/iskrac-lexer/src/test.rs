@@ -1,5 +1,7 @@
 use std::fs;
 
+use iskrac_interner::Interner;
+
 use crate::Lexer;
 
 #[test]
@@ -16,7 +18,8 @@ fn run() {
         println!("> {path:?}");
 
         let source = std::fs::read_to_string(&path).unwrap();
-        let lexer = Lexer::new(&source);
+        let mut interner = Interner::new();
+        let lexer = Lexer::new(&source, &mut interner);
         let actual: Vec<_> = lexer.map(|t| format!("{t:?}")).collect();
 
         path.set_extension("target");

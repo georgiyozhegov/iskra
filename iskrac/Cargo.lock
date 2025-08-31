@@ -6,6 +6,7 @@ version = 4
 name = "iskrac"
 version = "0.1.0"
 dependencies = [
+ "iskrac-interner",
  "iskrac-lexer",
 ]
 
@@ -16,3 +17,6 @@ version = "0.1.0"
 [[package]]
 name = "iskrac-lexer"
 version = "0.1.0"
+dependencies = [
+ "iskrac-interner",
+]

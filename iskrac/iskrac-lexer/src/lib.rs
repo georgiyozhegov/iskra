@@ -1,5 +1,6 @@
 use std::char;
 
+use iskrac_interner::Interner;
 pub use token::Token;
 
 #[cfg(test)]
@@ -7,13 +8,19 @@ mod test;
 mod token;
 
 pub struct Lexer<'s> {
+    source: &'s str,
+    cursor: usize,
     iter: std::iter::Peekable<std::str::Chars<'s>>,
+    interner: &'s mut Interner,
 }
 
 impl<'s> Lexer<'s> {
-    pub fn new(source: &'s str) -> Self {
+    pub fn new(source: &'s str, interner: &'s mut Interner) -> Self {
         Self {
+            source,
+            cursor: 0,
             iter: source.chars().peekable(),
+            interner,
         }
     }
 
@@ -28,27 +35,29 @@ impl<'s> Lexer<'s> {
     }
 
     fn begins_with_alphabetic(&mut self) -> Token {
-        let buffer = self.take_while(|c| {
+        let range = self.take_while(|c| {
             char_kind::is_alphabetic(c) || char_kind::is_numeric(c)
         });
-        self.keyword_or_identifier(buffer)
+        self.keyword_or_identifier(range)
     }
 
-    fn keyword_or_identifier(&mut self, buffer: String) -> Token {
-        match buffer.as_str() {
+    fn keyword_or_identifier(&mut self, range: (usize, usize)) -> Token {
+        match &self.source[range.0..range.1] {
             "let" => Token::Let,
             "function" => Token::Function,
             "do" => Token::Do,
             "end" => Token::End,
             "mutable" => Token::Mutable,
             "while" => Token::While,
-            _ => Token::Identifier(buffer),
+            name => Token::Identifier(self.interner.intern(name)),
         }
     }
 
     fn begins_with_numeric(&mut self) -> Token {
-        let buffer = self.take_while(|c| char_kind::is_numeric(c));
-        let value = buffer.parse().expect("todo: error manager");
+        let range = self.take_while(|c| char_kind::is_numeric(c));
+        let value = self.source[range.0..range.1]
+            .parse()
+            .expect("todo: error manager");
         Token::Integer(value)
     }
 
@@ -58,7 +67,7 @@ impl<'s> Lexer<'s> {
     }
 
     fn begins_with_other(&mut self) -> Token {
-        match self.iter.next().unwrap() {
+        match self.eat().unwrap() {
             '=' => Token::Equal,
             '-' => {
                 if self.followed_by('=') {
@@ -78,24 +87,34 @@ impl<'s> Lexer<'s> {
         }
     }
 
-    fn take_while(&mut self, predicate: impl Fn(&char) -> bool) -> String {
-        let mut buffer = String::new();
+    fn take_while(
+        &mut self,
+        predicate: impl Fn(&char) -> bool,
+    ) -> (usize, usize) {
+        let start = self.cursor;
         while let Some(c) = self.iter.peek() {
             if !predicate(c) {
                 break;
             }
-            buffer.push(self.iter.next().unwrap());
+            self.eat();
         }
-        buffer
+        let end = self.cursor;
+        (start, end)
     }
 
     fn followed_by(&mut self, c: char) -> bool {
         if self.iter.peek() == Some(&c) {
-            self.iter.next();
+            self.eat();
             true
         } else {
             false
         }
+    }
+
+    fn eat(&mut self) -> Option<char> {
+        let c = self.iter.next()?;
+        self.cursor += c.len_utf8();
+        Some(c)
     }
 }
 

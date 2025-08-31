@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 iskrac-lexer = { path = "iskrac-lexer" }
+iskrac-interner = { path = "iskrac-interner" }
 
 [workspace]
 members = ["iskrac-interner", "iskrac-lexer"]

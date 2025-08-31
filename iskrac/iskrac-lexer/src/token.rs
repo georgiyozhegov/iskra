@@ -1,3 +1,5 @@
+use iskrac_interner::Symbol;
+
 #[derive(Debug)]
 pub enum Token {
     Let,
@@ -16,7 +18,7 @@ pub enum Token {
     CloseRound,
     OpenCurly,
     CloseCurly,
-    Identifier(String),
+    Identifier(Symbol),
     Integer(i128),
     Invisible,
 }
