@@ -2,6 +2,8 @@ use std::char;
 
 pub use token::Token;
 
+#[cfg(test)]
+mod test;
 mod token;
 
 pub struct Lexer<'s> {
