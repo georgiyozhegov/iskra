@@ -1,0 +1,8 @@
+[package]
+name = "iskrac-runer"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+iskrac-lexer = { path = "../iskrac-lexer" }
+iskrac-interner = { path = "../iskrac-interner" }

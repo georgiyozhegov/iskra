@@ -4,8 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-iskrac-lexer = { path = "iskrac-lexer" }
-iskrac-interner = { path = "iskrac-interner" }
+iskrac-runer = { path = "iskrac-runer" }
 
 [workspace]
-members = ["iskrac-interner", "iskrac-lexer"]
+members = ["iskrac-interner", "iskrac-lexer", "iskrac-runer"]

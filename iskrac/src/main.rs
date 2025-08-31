@@ -1,11 +1,7 @@
-use iskrac_interner::Interner;
-use iskrac_lexer::Lexer;
+use iskrac_runer::Runer;
 
 fn main() {
     let source = include_str!("../etc/example.krm");
-    let mut interner = Interner::new();
-    for token in Lexer::new(source, &mut interner) {
-        println!("{token:?}");
-    }
-    println!("{interner:?}");
+    let mut runer = Runer::new(source);
+    runer.run();
 }
