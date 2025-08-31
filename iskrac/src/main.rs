@@ -1,4 +1,4 @@
-use iskra_lexer::Lexer;
+use iskrac_lexer::Lexer;
 
 fn main() {
     let source = include_str!("../etc/example.krm");

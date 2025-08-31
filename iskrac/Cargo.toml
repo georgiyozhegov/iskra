@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-iskra-lexer = { path = "iskra-lexer" }
+iskrac-lexer = { path = "iskrac-lexer" }
 
 [workspace]
-members = ["iskra-lexer"]
+members = ["iskrac-lexer"]
