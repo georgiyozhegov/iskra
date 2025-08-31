@@ -3,5 +3,12 @@
 version = 4
 
 [[package]]
+name = "iskra-lexer"
+version = "0.1.0"
+
+[[package]]
 name = "iskrac"
 version = "0.1.0"
+dependencies = [
+ "iskra-lexer",
+]

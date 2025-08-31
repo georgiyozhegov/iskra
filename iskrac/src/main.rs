@@ -1,3 +1,8 @@
+use iskra_lexer::Lexer;
+
 fn main() {
-    println!("code that sparks");
+    let source = include_str!("../etc/example.krm");
+    for token in Lexer::new(source) {
+        println!("{token:?}");
+    }
 }
