@@ -8,7 +8,10 @@ pub struct Runer<'s> {
 
 impl<'s> Runer<'s> {
     pub fn new(source: &'s str) -> Self {
-        Self { source, interner: Interner::new() }
+        Self {
+            source,
+            interner: Interner::new(),
+        }
     }
 
     pub fn run(&mut self) {
